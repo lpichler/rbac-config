@@ -889,8 +889,8 @@ definition rbac/workspace {
 	permission rbac_permissions_read = t_binding->rbac_permissions_read + t_parent->rbac_permissions_read
 	permission rbac_principal_read = t_binding->rbac_principal_read + t_parent->rbac_principal_read
 	permission rbac_principal_write = t_binding->rbac_principal_write + t_parent->rbac_principal_write
-	permission rbac_role_binding_grant = t_binding->rbac_role_binding_grant + t_parent->rbac_role_binding_grant
-	permission rbac_role_binding_revoke = t_binding->rbac_role_binding_revoke + t_parent->rbac_role_binding_revoke
+	permission rbac_role_binding_grant = t_binding->rbac_role_binding_grant
+	permission rbac_role_binding_revoke = t_binding->rbac_role_binding_revoke
 	permission rbac_role_binding_view = t_binding->rbac_role_binding_view + t_parent->rbac_role_binding_view
 	permission rbac_roles_read = t_binding->rbac_roles_read + t_parent->rbac_roles_read
 	permission rbac_roles_write = t_binding->rbac_roles_write + t_parent->rbac_roles_write
