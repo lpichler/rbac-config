@@ -1,0 +1,15 @@
+version 0.2
+namespace notifications
+
+import rbac
+
+// App: Integrations - Resource: Endpoints
+@rbac.add_v1_based_permission(app:'integrations', resource:'endpoints', verb:'write', v2_perm:'integrations_endpoints_edit');
+@rbac.add_v1_based_permission(app:'integrations', resource:'endpoints', verb:'read', v2_perm:'integrations_endpoints_view');
+
+// App: Notifications - Resource: Events
+@rbac.add_v1_based_permission(app:'notifications', resource:'events', verb:'read', v2_perm:'notifications_events_view');
+
+// App: Notifications - Resource: Notifications
+@rbac.add_v1_based_permission(app:'notifications', resource:'notifications', verb:'write', v2_perm:'notifications_notifications_edit');
+@rbac.add_v1_based_permission(app:'notifications', resource:'notifications', verb:'read', v2_perm:'notifications_notifications_view');

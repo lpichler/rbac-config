@@ -7,6 +7,9 @@ objects:
       {
           "*": [
               {
+                  "verb": "read"
+              },
+              {
                   "verb": "*"
               }
           ],
@@ -31,47 +34,30 @@ objects:
               }
           ]
       }
-    approval.json: |
+    ansible-wisdom-admin-dashboard.json: |
       {
-          "actions": [
+          "chart-recommendations": [
               {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
+                  "verb": "read",
+                  "description": "View the Recommendations Chart."
               }
           ],
-          "requests": [
+          "chart-user-sentiment": [
               {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
+                  "verb": "read",
+                  "description": "View the User Sentiment Chart."
               }
           ],
-          "templates": [
+          "chart-module-usage": [
               {
-                  "verb": "read"
+                  "verb": "read",
+                  "description": "View the Module Usage Chart."
               }
           ],
-          "workflows": [
+          "chart-active-users": [
               {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "update"
-              },
-              {
-                  "verb": "delete"
-              },
-              {
-                  "verb": "link"
-              },
-              {
-                  "verb": "unlink"
+                  "verb": "read",
+                  "description": "View the Active Users Chart."
               }
           ]
       }
@@ -86,109 +72,6 @@ objects:
               },
               {
                   "verb": "*"
-              }
-          ]
-      }
-    catalog.json: |
-      {
-          "approval_requests": [
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "write"
-              }
-          ],
-          "orders": [
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "write"
-              },
-              {
-                  "verb": "order"
-              }
-          ],
-          "order_items": [
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "write"
-              },
-              {
-                  "verb": "order"
-              }
-          ],
-          "order_processes": [
-              {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "link"
-              },
-              {
-                  "verb": "unlink"
-              },
-              {
-                  "verb": "update"
-              },
-              {
-                  "verb": "delete"
-              }
-          ],
-          "portfolios": [
-              {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "update"
-              },
-              {
-                  "verb": "delete"
-              },
-              {
-                  "verb": "order"
-              }
-          ],
-          "portfolio_items": [
-              {
-                  "verb": "create"
-              },
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "update"
-              },
-              {
-                  "verb": "delete"
-              },
-              {
-                  "verb": "order"
-              }
-          ],
-          "progress_messages": [
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "write"
-              }
-          ],
-          "tenants": [
-              {
-                  "verb": "read"
-              },
-              {
-                  "verb": "update"
               }
           ]
       }
@@ -220,9 +103,6 @@ objects:
               "verb": "create"
             },
             {
-              "verb": "update"
-            },
-            {
               "verb": "delete"
             },
             {
@@ -243,7 +123,32 @@ objects:
                   "verb": "*"
               }
           ],
-          "state": [
+          "profile": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              },
+              {
+                  "verb": "*"
+              }
+          ]
+      }
+    content-sources.json: |
+      {
+          "repositories": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              },
+              {
+                  "verb": "upload"
+              }
+          ],
+          "templates": [
               {
                   "verb": "read"
               },
@@ -251,9 +156,9 @@ objects:
                   "verb": "write"
               }
           ],
-          "state-changes": [
+          "*": [
               {
-                  "verb": "read"
+                  "verb": "*"
               }
           ]
       }
@@ -323,15 +228,18 @@ objects:
                   "verb": "read"
               }
           ],
-          "oci.payer_tenant_id": [
+          "cost_model": [
               {
                   "verb": "*"
               },
               {
                   "verb": "read"
+              },
+              {
+                  "verb": "write"
               }
           ],
-          "cost_model": [
+          "settings": [
               {
                   "verb": "*"
               },
@@ -348,39 +256,43 @@ objects:
               }
           ]
       }
-    drift.json: |
+    hybrid-committed-spend.json: |
       {
-        "*": [
-          {
-            "verb": "*"
-          }
-        ],
-        "comparisons": [
-          {
-            "verb": "read"
-          }
-        ],
-        "baselines": [
-          {
-            "verb": "read"
-          },
-          {
-            "verb": "write"
-          }
-        ],
-        "historical-system-profiles": [
-          {
-            "verb": "read"
-          }
-        ],
-        "notifications": [
-          {
-            "verb": "read"
-          },
-          {
-            "verb": "write"
-          }
-        ]
+          "reports": [
+              {
+                  "verb": "read"
+              }
+          ]
+      }
+    idmsvc.json: |
+      {
+          "token": [
+              {
+                  "verb": "create"
+              }
+          ],
+          "domains": [
+              {
+                  "verb": "list"
+              },
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "create"
+              },
+              {
+                  "verb": "update"
+              },
+              {
+                  "verb": "delete"
+              }
+          ],
+          "*": [
+              {
+                  "verb": "*"
+              }
+          ]
       }
     integrations.json: |
       {
@@ -418,6 +330,17 @@ objects:
               {
                   "verb": "*"
               }
+          ],
+          "groups": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              },
+              {
+                  "verb": "*"
+              }
           ]
       }
     malware-detection.json: |
@@ -429,13 +352,10 @@ objects:
               {
                   "verb": "read"
               }
-          ]
-      }
-    migration-analytics.json: |
-      {
-          "*": [
+          ],
+          "acknowledgements": [
               {
-                  "verb": "*"
+                  "verb": "write"
               }
           ]
       }
@@ -509,6 +429,38 @@ objects:
       }
     playbook-dispatcher.json: |
       {
+          "*": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              }
+          ],
+          "remediations_run": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              }
+          ],
+          "tasks_run": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              }
+          ],
+          "config_manager_run": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              }
+          ],
           "run": [
               {
                   "verb": "read"
@@ -534,6 +486,30 @@ objects:
               }
           ]
       }
+    rbac.json: |
+      {
+          "principal": [
+              {
+                  "verb": "read"
+              }
+          ],
+          "role_binding": [
+              {
+                  "verb": "view"
+              },
+              {
+                  "verb": "grant"
+              },
+              {
+                  "verb": "revoke"
+              }
+          ],
+          "*": [
+              {
+                  "verb": "*"
+              }
+          ]
+      }
     remediations.json: |
       {
           "remediation": [
@@ -550,6 +526,12 @@ objects:
           "*": [
               {
                   "verb": "*"
+              },
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
               }
           ]
       }
@@ -567,6 +549,20 @@ objects:
     sources.json: |
       {
           "*": [
+              {
+                  "verb": "*"
+              }
+          ]
+      }
+    staleness.json: |
+      {
+          "staleness": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              },
               {
                   "verb": "*"
               }
@@ -596,6 +592,14 @@ objects:
               }
           ],
           "products": [
+              {
+                  "verb": "read"
+              },
+              {
+                  "verb": "write"
+              }
+          ],
+          "cloud_access": [
               {
                   "verb": "read"
               },
@@ -662,11 +666,15 @@ objects:
               {
                   "verb": "read"
               }
+          ],
+          "toggle_cves_without_errata": [
+              {
+                  "verb": "write"
+              }
           ]
       }
   kind: ConfigMap
   metadata:
-    creationTimestamp: null
     name: model-access-permissions
     annotations:
       qontract.recycle: "true"

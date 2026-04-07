@@ -3,26 +3,20 @@
     {
       "name": "RHC Administrator",
       "display_name": "RHC administrator",
-      "description": "Perform any operations on RHC manager",
+      "description": "Perform any available operation on RHC manager resources.",
       "system": true,
       "admin_default": true,
       "platform_default": false,
-      "version": 5,
+      "version": 10,
       "access": [
         {
           "permission": "config-manager:activation_keys:*"
         },
         {
-          "permission": "config-manager:state:read"
+          "permission": "config-manager:profile:*"
         },
         {
-          "permission": "config-manager:state:write"
-        },
-        {
-          "permission": "config-manager:state-changes:read"
-        },
-        {
-          "permission": "inventory:*:read"
+          "permission": "playbook-dispatcher:config_manager_run:read"
         },
         {
           "permission": "playbook-dispatcher:run:read",
@@ -43,23 +37,23 @@
     },
     {
       "name": "RHC Viewer",
-      "display_name": "RHC viewer",
-      "description": "Can view the current configurations on RHC manager",
+      "display_name": "RHC user",
+      "description": "Perform read operations on the current configurations on RHC manager and update actions to the activation keys.",
       "system": true,
       "platform_default": true,
-      "version": 5,
+      "version": 11,
       "access": [
         {
           "permission": "config-manager:activation_keys:read"
         },
         {
-          "permission": "config-manager:state:read"
+          "permission": "config-manager:activation_keys:write"
         },
         {
-          "permission": "config-manager:state-changes:read"
+          "permission": "config-manager:profile:read"
         },
         {
-          "permission": "inventory:*:read"
+          "permission": "playbook-dispatcher:config_manager_run:read"
         },
         {
           "permission": "playbook-dispatcher:run:read",

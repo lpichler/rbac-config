@@ -1,0 +1,241 @@
+---
+# Experiment 1: Schema Inheritance Break Validation
+#
+# Tests that removing + t_parent->rbac_role_binding_grant and
+# + t_parent->rbac_role_binding_revoke from rbac/workspace correctly prevents
+# tenant-level role_binding grant/revoke from cascading to child workspaces,
+# while preserving:
+#   - rbac_role_binding_view cascade (kept)
+#   - data-plane permission cascade (inventory_host_view etc.)
+#   - all_all_all wildcard behavior at tenant level NOT cascading grant to ws
+
+schema: |-
+  definition rbac/principal {}
+
+  definition rbac/group {
+    relation member: rbac/principal
+  }
+
+  definition rbac/role {
+    permission all_all_all = t_all_all_all
+    relation t_all_all_all: rbac/principal:*
+
+    permission rbac_all_all = t_rbac_all_all
+    relation t_rbac_all_all: rbac/principal:*
+
+    permission rbac_all_grant = t_rbac_all_grant
+    relation t_rbac_all_grant: rbac/principal:*
+
+    permission rbac_all_view = t_rbac_all_view
+    relation t_rbac_all_view: rbac/principal:*
+
+    permission rbac_all_revoke = t_rbac_all_revoke
+    relation t_rbac_all_revoke: rbac/principal:*
+
+    permission rbac_role_binding_all = t_rbac_role_binding_all
+    relation t_rbac_role_binding_all: rbac/principal:*
+
+    permission rbac_role_binding_grant = t_rbac_role_binding_grant + rbac_role_binding_all + rbac_all_grant + rbac_all_all + all_all_all + t_child->rbac_role_binding_grant
+    relation t_rbac_role_binding_grant: rbac/principal:*
+
+    permission rbac_role_binding_revoke = t_rbac_role_binding_revoke + rbac_role_binding_all + rbac_all_revoke + rbac_all_all + all_all_all + t_child->rbac_role_binding_revoke
+    relation t_rbac_role_binding_revoke: rbac/principal:*
+
+    permission rbac_role_binding_view = t_rbac_role_binding_view + rbac_role_binding_all + rbac_all_view + rbac_all_all + all_all_all + t_child->rbac_role_binding_view
+    relation t_rbac_role_binding_view: rbac/principal:*
+
+    permission inventory_all_all = t_inventory_all_all
+    relation t_inventory_all_all: rbac/principal:*
+
+    permission inventory_all_read = t_inventory_all_read
+    relation t_inventory_all_read: rbac/principal:*
+
+    permission inventory_hosts_all = t_inventory_hosts_all
+    relation t_inventory_hosts_all: rbac/principal:*
+
+    permission inventory_hosts_read = t_inventory_hosts_read
+    relation t_inventory_hosts_read: rbac/principal:*
+
+    permission inventory_host_view = inventory_hosts_read + inventory_hosts_all + inventory_all_read + inventory_all_all + all_all_all + t_child->inventory_host_view
+    relation t_inventory_host_view: rbac/principal:*
+
+    relation t_child: rbac/role
+    permission child = t_child
+  }
+
+  definition rbac/role_binding {
+    relation t_role: rbac/role
+    relation t_subject: rbac/principal | rbac/group#member
+    permission subject = t_subject
+    permission rbac_role_binding_grant = (subject & t_role->rbac_role_binding_grant)
+    permission rbac_role_binding_revoke = (subject & t_role->rbac_role_binding_revoke)
+    permission rbac_role_binding_view = (subject & t_role->rbac_role_binding_view)
+    permission inventory_host_view = (subject & t_role->inventory_host_view)
+  }
+
+  definition rbac/tenant {
+    relation t_binding: rbac/role_binding
+    relation t_platform: rbac/platform
+    permission binding = t_binding
+    permission rbac_role_binding_grant = t_binding->rbac_role_binding_grant + t_platform->rbac_role_binding_grant
+    permission rbac_role_binding_revoke = t_binding->rbac_role_binding_revoke + t_platform->rbac_role_binding_revoke
+    permission rbac_role_binding_view = t_binding->rbac_role_binding_view + t_platform->rbac_role_binding_view
+    permission inventory_host_view = t_binding->inventory_host_view + t_platform->inventory_host_view
+    permission role_binding_grant = rbac_role_binding_grant
+    permission role_binding_revoke = rbac_role_binding_revoke
+    permission role_binding_view = rbac_role_binding_view
+  }
+
+  definition rbac/platform {
+    relation t_binding: rbac/role_binding
+    permission rbac_role_binding_grant = t_binding->rbac_role_binding_grant
+    permission rbac_role_binding_revoke = t_binding->rbac_role_binding_revoke
+    permission rbac_role_binding_view = t_binding->rbac_role_binding_view
+    permission inventory_host_view = t_binding->inventory_host_view
+  }
+
+  definition rbac/workspace {
+    relation t_binding: rbac/role_binding
+    relation t_parent: rbac/workspace | rbac/tenant
+
+    permission parent = t_parent
+    permission binding = t_binding + t_parent->binding
+
+    // MODIFIED: grant and revoke do NOT cascade from parent
+    permission rbac_role_binding_grant = t_binding->rbac_role_binding_grant
+    permission rbac_role_binding_revoke = t_binding->rbac_role_binding_revoke
+    // KEPT: view DOES cascade from parent
+    permission rbac_role_binding_view = t_binding->rbac_role_binding_view + t_parent->rbac_role_binding_view
+
+    // Data-plane: inventory_host_view STILL cascades from parent
+    permission inventory_host_view = t_binding->inventory_host_view + t_parent->inventory_host_view
+
+    permission role_binding_grant = rbac_role_binding_grant
+    permission role_binding_revoke = rbac_role_binding_revoke
+    permission role_binding_view = rbac_role_binding_view
+  }
+
+relationships: |
+  // --- Principals ---
+  // user_admin: has rbac_role_binding_grant at tenant level
+  // user_viewer: has rbac_role_binding_view at tenant level
+  // user_ws_admin: has rbac_role_binding_grant at workspace level directly
+  // user_wildcard: has all_all_all at tenant level (org admin)
+  // user_inventory: has inventory_host_view at tenant level
+
+  // --- Roles ---
+  // role_rb_grant: grants rbac_role_binding_grant
+  rbac/role:role_rb_grant#t_rbac_role_binding_grant@rbac/principal:*
+
+  // role_rb_view: grants rbac_role_binding_view
+  rbac/role:role_rb_view#t_rbac_role_binding_view@rbac/principal:*
+
+  // role_rb_revoke: grants rbac_role_binding_revoke
+  rbac/role:role_rb_revoke#t_rbac_role_binding_revoke@rbac/principal:*
+
+  // role_wildcard: grants all_all_all (org admin)
+  rbac/role:role_wildcard#t_all_all_all@rbac/principal:*
+
+  // role_inventory: grants inventory_host_view
+  rbac/role:role_inventory#t_inventory_hosts_read@rbac/principal:*
+
+  // --- Role Bindings ---
+  // rb1: binds user_admin to role_rb_grant (grant permission)
+  rbac/role_binding:rb1#t_role@rbac/role:role_rb_grant
+  rbac/role_binding:rb1#t_subject@rbac/principal:user_admin
+
+  // rb2: binds user_viewer to role_rb_view (view permission)
+  rbac/role_binding:rb2#t_role@rbac/role:role_rb_view
+  rbac/role_binding:rb2#t_subject@rbac/principal:user_viewer
+
+  // rb3: binds user_ws_admin to role_rb_grant at workspace level directly
+  rbac/role_binding:rb3#t_role@rbac/role:role_rb_grant
+  rbac/role_binding:rb3#t_subject@rbac/principal:user_ws_admin
+
+  // rb4: binds user_wildcard to role_wildcard (all_all_all)
+  rbac/role_binding:rb4#t_role@rbac/role:role_wildcard
+  rbac/role_binding:rb4#t_subject@rbac/principal:user_wildcard
+
+  // rb5: binds user_inventory to role_inventory
+  rbac/role_binding:rb5#t_role@rbac/role:role_inventory
+  rbac/role_binding:rb5#t_subject@rbac/principal:user_inventory
+
+  // rb6: binds user_admin to role_rb_revoke (revoke permission at tenant)
+  rbac/role_binding:rb6#t_role@rbac/role:role_rb_revoke
+  rbac/role_binding:rb6#t_subject@rbac/principal:user_admin
+
+  // --- Tenant ---
+  // tenant1 has rb1 (grant), rb2 (view), rb4 (wildcard), rb5 (inventory), rb6 (revoke)
+  rbac/tenant:tenant1#t_binding@rbac/role_binding:rb1
+  rbac/tenant:tenant1#t_binding@rbac/role_binding:rb2
+  rbac/tenant:tenant1#t_binding@rbac/role_binding:rb4
+  rbac/tenant:tenant1#t_binding@rbac/role_binding:rb5
+  rbac/tenant:tenant1#t_binding@rbac/role_binding:rb6
+
+  // --- Workspace ---
+  // ws1 is a child of tenant1 (inherits from tenant)
+  rbac/workspace:ws1#t_parent@rbac/tenant:tenant1
+
+  // ws1 has rb3 (user_ws_admin with grant, directly on workspace)
+  rbac/workspace:ws1#t_binding@rbac/role_binding:rb3
+
+  // ws2 is a child of tenant1 (inherits from tenant) -- no direct bindings
+  rbac/workspace:ws2#t_parent@rbac/tenant:tenant1
+
+assertions:
+  assertTrue:
+    # --- Tenant-level permissions work as expected ---
+    # user_admin CAN grant at tenant level
+    - "rbac/tenant:tenant1#role_binding_grant@rbac/principal:user_admin"
+    # user_admin CAN revoke at tenant level
+    - "rbac/tenant:tenant1#role_binding_revoke@rbac/principal:user_admin"
+    # user_viewer CAN view at tenant level
+    - "rbac/tenant:tenant1#role_binding_view@rbac/principal:user_viewer"
+    # user_wildcard (all_all_all) CAN grant at tenant level
+    - "rbac/tenant:tenant1#role_binding_grant@rbac/principal:user_wildcard"
+    # user_wildcard (all_all_all) CAN view at tenant level
+    - "rbac/tenant:tenant1#role_binding_view@rbac/principal:user_wildcard"
+
+    # --- Workspace: rbac_role_binding_view DOES cascade from tenant ---
+    # user_viewer CAN view role bindings on ws1 (cascaded from tenant)
+    - "rbac/workspace:ws1#role_binding_view@rbac/principal:user_viewer"
+    # user_viewer CAN view role bindings on ws2 (cascaded from tenant)
+    - "rbac/workspace:ws2#role_binding_view@rbac/principal:user_viewer"
+    # user_wildcard CAN view on workspace (cascaded from tenant)
+    - "rbac/workspace:ws1#role_binding_view@rbac/principal:user_wildcard"
+
+    # --- Workspace: direct bindings still work ---
+    # user_ws_admin CAN grant on ws1 (direct binding rb3 on ws1)
+    - "rbac/workspace:ws1#role_binding_grant@rbac/principal:user_ws_admin"
+
+    # --- Data-plane: inventory_host_view STILL cascades from tenant ---
+    # user_inventory CAN view hosts on ws1 (cascaded from tenant)
+    - "rbac/workspace:ws1#inventory_host_view@rbac/principal:user_inventory"
+    # user_inventory CAN view hosts on ws2 (cascaded from tenant)
+    - "rbac/workspace:ws2#inventory_host_view@rbac/principal:user_inventory"
+
+  assertFalse:
+    # --- CRITICAL: grant does NOT cascade from tenant to workspace ---
+    # user_admin CANNOT grant on ws1 (inheritance broken)
+    - "rbac/workspace:ws1#role_binding_grant@rbac/principal:user_admin"
+    # user_admin CANNOT grant on ws2 (inheritance broken)
+    - "rbac/workspace:ws2#role_binding_grant@rbac/principal:user_admin"
+
+    # --- CRITICAL: revoke does NOT cascade from tenant to workspace ---
+    # user_admin CANNOT revoke on ws1 (inheritance broken)
+    - "rbac/workspace:ws1#role_binding_revoke@rbac/principal:user_admin"
+    # user_admin CANNOT revoke on ws2 (inheritance broken)
+    - "rbac/workspace:ws2#role_binding_revoke@rbac/principal:user_admin"
+
+    # --- CRITICAL: all_all_all wildcard does NOT cascade grant to workspace ---
+    # user_wildcard CANNOT grant on ws1 (inheritance broken even for wildcard)
+    - "rbac/workspace:ws1#role_binding_grant@rbac/principal:user_wildcard"
+    # user_wildcard CANNOT revoke on ws1 (inheritance broken even for wildcard)
+    - "rbac/workspace:ws1#role_binding_revoke@rbac/principal:user_wildcard"
+
+    # --- user_ws_admin can only grant on ws1, NOT ws2 ---
+    - "rbac/workspace:ws2#role_binding_grant@rbac/principal:user_ws_admin"
+
+    # --- user_viewer cannot grant anywhere ---
+    - "rbac/workspace:ws1#role_binding_grant@rbac/principal:user_viewer"
+    - "rbac/tenant:tenant1#role_binding_grant@rbac/principal:user_viewer"

@@ -63,15 +63,18 @@
             "verb": "read"
         }
     ],
-    "oci.payer_tenant_id": [
+    "cost_model": [
         {
             "verb": "*"
         },
         {
             "verb": "read"
+        },
+        {
+            "verb": "write"
         }
     ],
-    "cost_model": [
+    "settings": [
         {
             "verb": "*"
         },

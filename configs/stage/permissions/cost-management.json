@@ -39,14 +39,6 @@
             "verb": "read"
         }
     ],
-    "oci.payer_tenant_id": [
-        {
-            "verb": "*"
-        },
-        {
-            "verb": "read"
-        }
-    ],
     "openshift.cluster": [
         {
             "verb": "*"
@@ -72,6 +64,17 @@
         }
     ],
     "cost_model": [
+        {
+            "verb": "*"
+        },
+        {
+            "verb": "read"
+        },
+        {
+            "verb": "write"
+        }
+    ],
+    "settings": [
         {
             "verb": "*"
         },

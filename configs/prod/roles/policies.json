@@ -2,16 +2,28 @@
   "roles": [
     {
       "name": "Policies administrator",
-      "description": "Perform any available operation against any Policies resource.",
+      "description": "Perform any available operation on any Policies resource.",
       "system": true,
-      "platform_default": true,
-      "version": 5,
+      "admin_default": true,
+      "version": 8,
       "access": [
         {
-          "permission": "policies:*:*"
+          "permission": "policies:policies:read"
         },
         {
-          "permission": "inventory:*:read"
+          "permission": "policies:policies:write"
+        }
+      ]
+    },
+    {
+      "name": "Policies viewer",
+      "description": "Perform read operation on any Policies resource.",
+      "system": true,
+      "platform_default": true,
+      "version": 3,
+      "access": [
+        {
+          "permission": "policies:policies:read"
         }
       ]
     }

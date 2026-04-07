@@ -14,11 +14,16 @@
               "write",
               "create",
               "update",
+              "upload",
               "delete",
+              "list",
               "link",
               "unlink",
               "order",
-              "execute"
+              "execute",
+              "view",
+              "grant",
+              "revoke"
             ]
           },
           "description": {

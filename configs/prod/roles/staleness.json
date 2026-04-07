@@ -1,0 +1,35 @@
+{
+  "roles": [
+    {
+      "name": "Organization Staleness and Deletion Administrator",
+      "display_name": "Organization staleness and deletion administrator",
+      "description": "Perform read and update operations on organization staleness and deletion data.",
+      "system": true,
+      "platform_default": false,
+      "admin_default": true,
+      "version": 2,
+      "access": [
+        {
+          "permission": "staleness:staleness:write"
+        },
+        {
+          "permission": "staleness:staleness:read"
+        }
+      ]
+    },
+    {
+      "name": "Organization Staleness and Deletion Viewer",
+      "display_name": "Organization staleness and deletion viewer",
+      "description": "Perform read operations on organization staleness and deletion data.",
+      "system": true,
+      "platform_default": true,
+      "admin_default": false,
+      "version": 2,
+      "access": [
+        {
+          "permission": "staleness:staleness:read"
+        }
+      ]
+    }
+  ]
+}
