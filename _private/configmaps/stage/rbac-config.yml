@@ -3,273 +3,29 @@ apiVersion: v1
 objects:
 - apiVersion: v1
   data:
-    approval.json: |
+    ansible-wisdom-admin-dashboard.json: |
       {
         "roles": [
           {
-            "name": "Approval Administrator",
+            "name": "Ansible Wisdom Admin Dashboard user",
+            "display_name": "Ansible Lightspeed administrator",
+            "description": "Perform read operations for Organization Administrators on all Lightspeed charts.",
             "system": true,
-            "version": 5,
-            "description": "An approval administrator role that grants permissions to manage workflows, requests, actions, and templates.",
-            "access": [
-              {
-                "permission": "approval:templates:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:delete",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:link",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:unlink",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:requests:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:requests:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  },
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:actions:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  },
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:actions:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "name": "Approval User",
-            "system": true,
+            "platform_default": false,
+            "admin_default": true,
             "version": 4,
-            "description": "An approval user role which grants permissions to create/read/cancel a request, and read workflows.",
-            "platform_default": true,
             "access": [
               {
-                "permission": "approval:requests:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
+                "permission": "ansible-wisdom-admin-dashboard:chart-recommendations:read"
               },
               {
-                "permission": "approval:requests:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
+                "permission": "ansible-wisdom-admin-dashboard:chart-user-sentiment:read"
               },
               {
-                "permission": "approval:actions:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
+                "permission": "ansible-wisdom-admin-dashboard:chart-module-usage:read"
               },
               {
-                "permission": "approval:actions:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:workflows:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "name": "Approval Approver",
-            "system": true,
-            "version": 4,
-            "description": "An approval approver role that grants permissions to read and approve requests.",
-            "access": [
-              {
-                "permission": "approval:requests:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:actions:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "approval:actions:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
+                "permission": "ansible-wisdom-admin-dashboard:chart-active-users:read"
               }
             ]
           }
@@ -280,10 +36,11 @@ objects:
         "roles": [
           {
             "name": "Automation Analytics Administrator",
-            "description": "An Automation Analytics Administrator role that grants ALL permissions.",
+            "display_name": "Automation Analytics administrator",
+            "description": "Perform any available operation on Automation Analytics resources.",
             "system": true,
             "platform_default": false,
-            "version": 3,
+            "version": 4,
             "access": [
               {
                 "permission": "automation-analytics:*:*"
@@ -292,10 +49,11 @@ objects:
           },
           {
             "name": "Automation Analytics Editor",
-            "description": "An Automation Analytics Editor role that grants read-write permissions.",
+            "display_name": "Automation Analytics editor",
+            "description": "Perform read and update operations on Automation Analytics resources.",
             "system": true,
             "platform_default": true,
-            "version": 4,
+            "version": 5,
             "access": [
               {
                 "permission": "automation-analytics:*:read"
@@ -307,481 +65,14 @@ objects:
           },
           {
             "name": "Automation Analytics Viewer",
-            "description": "An Automation Analytics Viewer role that grants read permissions.",
+            "display_name": "Automation Analytics viewer",
+            "description": "Perform read operations on Automation Analytics resources.",
             "system": true,
             "platform_default": false,
-            "version": 3,
+            "version": 4,
             "access": [
               {
                 "permission": "automation-analytics:*:read"
-              }
-            ]
-          }
-        ]
-      }
-    catalog.json: |
-      {
-        "roles": [
-          {
-            "name": "Catalog Administrator",
-            "display_name": "Automation Services Catalog administrator",
-            "system": true,
-            "version": 9,
-            "description": "A catalog administrator roles grants create,read,update, delete and order permissions",
-            "access": [
-              {
-                "permission": "catalog:portfolios:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolios:create"
-              },
-              {
-                "permission": "catalog:portfolios:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolios:delete",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolios:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:delete",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:orders:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:orders:write",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:orders:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_items:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_items:write",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_items:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:progress_messages:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:progress_messages:write",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:approval_requests:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:approval_requests:write",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:tenants:update"
-              },
-              {
-                "permission": "catalog:tenants:read"
-              },
-              {
-                "permission": "catalog:order_processes:create",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_processes:delete",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_processes:link",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_processes:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_processes:unlink",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_processes:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "admin"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "name": "Catalog User",
-            "display_name": "Automation Services Catalog user",
-            "system": true,
-            "version": 9,
-            "description": "A catalog user roles grants read and order permissions",
-            "platform_default": true,
-            "access": [
-              {
-                "permission": "catalog:portfolios:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolios:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolios:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:update",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:portfolio_items:order",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "group"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:orders:write"
-              },
-              {
-                "permission": "catalog:orders:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:orders:order"
-              },
-              {
-                "permission": "catalog:order_items:write"
-              },
-              {
-                "permission": "catalog:order_items:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:order_items:order"
-              },
-              {
-                "permission": "catalog:progress_messages:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:approval_requests:read",
-                "resourceDefinitions": [
-                  {
-                    "attributeFilter": {
-                      "key": "scope",
-                      "operation": "equal",
-                      "value": "user"
-                    }
-                  }
-                ]
-              },
-              {
-                "permission": "catalog:tenants:read"
               }
             ]
           }
@@ -792,16 +83,14 @@ objects:
         "roles": [
           {
             "name": "Compliance administrator",
-            "description": "A Compliance role that grants full access to any Compliance resource.",
+            "description": "Perform any available operation on Compliance resources.",
             "system": true,
+            "platform_default": false,
             "admin_default": true,
-            "version": 11,
+            "version": 13,
             "access": [
               {
                 "permission": "compliance:*:*"
-              },
-              {
-                "permission": "inventory:*:read"
               },
               {
                 "permission": "remediations:remediation:read"
@@ -813,10 +102,10 @@ objects:
           },
           {
             "name": "Compliance viewer",
-            "description": "A Compliance role that grants read access to any Compliance resource.",
+            "description": "Perform read operations on Compliance resources.",
             "system": true,
             "platform_default": true,
-            "version": 4,
+            "version": 6,
             "access": [
               {
                 "permission": "compliance:policy:read"
@@ -826,9 +115,6 @@ objects:
               },
               {
                 "permission": "compliance:system:read"
-              },
-              {
-                "permission": "inventory:*:read"
               },
               {
                 "permission": "remediations:remediation:read"
@@ -843,26 +129,20 @@ objects:
           {
             "name": "RHC Administrator",
             "display_name": "RHC administrator",
-            "description": "Perform any operations on RHC manager",
+            "description": "Perform any available operation on RHC manager resources.",
             "system": true,
             "admin_default": true,
             "platform_default": false,
-            "version": 5,
+            "version": 10,
             "access": [
               {
                 "permission": "config-manager:activation_keys:*"
               },
               {
-                "permission": "config-manager:state:read"
+                "permission": "config-manager:profile:*"
               },
               {
-                "permission": "config-manager:state:write"
-              },
-              {
-                "permission": "config-manager:state-changes:read"
-              },
-              {
-                "permission": "inventory:*:read"
+                "permission": "playbook-dispatcher:config_manager_run:read"
               },
               {
                 "permission": "playbook-dispatcher:run:read",
@@ -883,23 +163,23 @@ objects:
           },
           {
             "name": "RHC Viewer",
-            "display_name": "RHC viewer",
-            "description": "Can view the current configurations on RHC manager",
+            "display_name": "RHC user",
+            "description": "Perform read operations on the current configurations on RHC manager and update actions to the activation keys.",
             "system": true,
             "platform_default": true,
-            "version": 5,
+            "version": 11,
             "access": [
               {
                 "permission": "config-manager:activation_keys:read"
               },
               {
-                "permission": "config-manager:state:read"
+                "permission": "config-manager:activation_keys:write"
               },
               {
-                "permission": "config-manager:state-changes:read"
+                "permission": "config-manager:profile:read"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "playbook-dispatcher:config_manager_run:read"
               },
               {
                 "permission": "playbook-dispatcher:run:read",
@@ -922,29 +202,78 @@ objects:
           "roles": [
             {
               "name": "Repositories administrator",
-              "description": "Perform any available operation against any repositories resource.",
+              "description": "Perform any available operation on any repositories resource.",
               "system": true,
               "platform_default": false,
               "admin_default": true,
-              "version": 2,
+              "version": 3,
               "access": [
                 {
                   "permission": "content-sources:repositories:read"
                 },
                 {
                   "permission": "content-sources:repositories:write"
+                },
+                {
+                  "permission": "content-sources:repositories:upload"
                 }
               ]
             },
             {
               "name": "Repositories viewer",
-              "description": "Perform read only operations against repositories resources.",
+              "description": "Perform read-only operations on repositories resources.",
               "system": true,
               "platform_default": true,
-              "version": 2,
+              "version": 3,
               "access": [
                 {
                   "permission": "content-sources:repositories:read"
+                }
+              ]
+            },
+            {
+              "name": "Repositories uploader",
+              "description": "Perform content upload to repositories.",
+              "system": true,
+              "platform_default": false,
+              "version": 2,
+              "access": [
+                {
+                  "permission": "content-sources:repositories:upload"
+                }
+              ]
+            },
+            {
+              "name": "Content Template administrator",
+              "description": "Perform any available operation on any Content Template resource.",
+              "system": true,
+              "platform_default": false,
+              "admin_default": true,
+              "version": 3,
+              "access": [
+                {
+                  "permission": "content-sources:repositories:read"
+                },
+                {
+                  "permission": "content-sources:templates:read"
+                },
+                {
+                  "permission": "content-sources:templates:write"
+                }
+              ]
+            },
+            {
+              "name": "Content Template viewer",
+              "description": "Perform read-only operations on Content Template resources.",
+              "system": true,
+              "platform_default": true,
+              "version": 3,
+              "access": [
+                {
+                  "permission": "content-sources:repositories:read"
+                },
+                {
+                  "permission": "content-sources:templates:read"
                 }
               ]
             }
@@ -954,34 +283,42 @@ objects:
       {
           "roles": [{
               "name": "Cost Administrator",
-              "description": "A cost management administrator role that grants read and write permissions.",
+              "display_name": "Cost administrator",
+              "description": "Perform any available operation on cost management resources.",
               "system": true,
               "admin_default": true,
-              "version": 3,
+              "version": 4,
               "access": [{
                   "permission": "cost-management:*:*"
               }]
           }, {
               "name": "Cost Price List Administrator",
-              "description": "A cost management role that grants read and write permissions on cost models.",
+              "display_name": "Cost Price List administrator",
+              "description": "Perform read and write operations on cost models.",
               "system": true,
-              "version": 3,
+              "version": 6,
               "access": [{
                   "permission": "cost-management:cost_model:*"
+              }, {
+                  "permission": "cost-management:settings:*"
               }]
           }, {
               "name": "Cost Price List Viewer",
-              "description": "A cost management role that grants read permissions on cost models.",
+              "display_name": "Cost Price List viewer",
+              "description": "Perform read operations on cost models.",
               "system": true,
-              "version": 3,
+              "version": 5,
               "access": [{
                   "permission": "cost-management:cost_model:read"
+              }, {
+                  "permission": "cost-management:settings:read"
               }]
           }, {
               "name": "Cost Cloud Viewer",
-              "description": "A cost management role that grants read permissions on cost reports related to cloud sources.",
+              "display_name": "Cost cloud viewer",
+              "description": "Perform read operations on cost reports related to cloud sources.",
               "system": true,
-              "version": 6,
+              "version": 8,
               "access": [{
                   "permission": "cost-management:aws.account:*"
               }, {
@@ -992,73 +329,81 @@ objects:
                   "permission": "cost-management:gcp.account:*"
               }, {
                   "permission": "cost-management:gcp.project:*"
-              }, {
-                  "permission": "cost-management:oci.payer_tenant_id:*"
               }]
           }, {
               "name": "Cost OpenShift Viewer",
-              "description": "A cost management role that grants read permissions on cost reports related to OpenShift sources.",
+              "display_name": "Cost OpenShift viewer",
+              "description": "Perform read operations on cost reports related to OpenShift sources.",
               "system": true,
-              "version": 2,
+              "version": 3,
               "access": [{
                   "permission": "cost-management:openshift.cluster:*"
               }]
           }]
       }
-    drift.json: |
+    hybrid-committed-spend.json: |
       {
         "roles": [
           {
-            "name": "Drift analysis administrator",
-            "description": "Perform any available operation against any Drift Analysis resource.",
+            "name": "Hybrid Committed Spend viewer",
+            "description": "Perform read operations on any Hybrid Committed Spend report.",
             "system": true,
-            "admin_default": true,
-            "version": 11,
+            "admin_default": false,
+            "platform_default": false,
+            "version": 2,
             "access": [
               {
-                "permission": "drift:comparisons:read"
+                "permission": "hybrid-committed-spend:reports:read"
+              }
+            ]
+          }
+        ]
+      }
+    idmsvc.json: |
+      {
+        "roles": [
+          {
+            "name": "Domains administrator",
+            "display_name": "Directory and Domain Services administrator",
+            "description": "Create, read, update and delete Directory and Domains Services registrations.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": true,
+            "version": 3,
+            "access": [
+              {
+                "permission": "idmsvc:token:create"
               },
               {
-                "permission": "drift:baselines:read"
+                "permission": "idmsvc:domains:list"
               },
               {
-                "permission": "drift:baselines:write"
+                "permission": "idmsvc:domains:read"
               },
               {
-                "permission": "drift:historical-system-profiles:read"
+                "permission": "idmsvc:domains:create"
               },
               {
-                "permission": "drift:notifications:read"
+                "permission": "idmsvc:domains:update"
               },
               {
-                "permission": "drift:notifications:write"
-              },
-              {
-                "permission": "inventory:*:read"
+                "permission": "idmsvc:domains:delete"
               }
             ]
           },
           {
-            "name": "Drift viewer",
-            "description": "Perform read only operation against Drift Analysis resources.",
+            "name": "Domains viewer",
+            "display_name": "Directory and Domain Services viewer",
+            "description": "Read Directory and Domains Services registrations.",
             "system": true,
             "platform_default": true,
             "version": 3,
             "access": [
               {
-                "permission": "drift:comparisons:read"
+                "permission": "idmsvc:domains:list"
               },
               {
-                "permission": "drift:baselines:read"
-              },
-              {
-                "permission": "drift:historical-system-profiles:read"
-              },
-              {
-                "permission": "drift:notifications:read"
-              },
-              {
-                "permission": "inventory:*:read"
+                "permission": "idmsvc:domains:read"
               }
             ]
           }
@@ -1070,16 +415,27 @@ objects:
           {
             "name": "Insights administrator",
             "display_name": "RHEL Advisor administrator",
-            "description": "Perform any available operation against any RHEL Advisor resource.",
+            "description": "Perform any available operation against any RHEL advisor resource.",
             "system": true,
             "platform_default": true,
-            "version": 10,
+            "version": 12,
             "access": [
               {
                 "permission": "advisor:*:*"
-              },
+              }
+            ]
+          },
+          {
+            "name": "Advisor Viewer",
+            "display_name": "RHEL Advisor viewer",
+            "description": "Perform read operations on RHEL advisor data.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 2,
+            "access": [
               {
-                "permission": "inventory:*:read"
+                "permission": "advisor:*:read"
               }
             ]
           }
@@ -1090,13 +446,88 @@ objects:
         "roles": [
           {
             "name": "Inventory administrator",
-            "description": "Perform any available operation against any Inventory resource.",
+            "description": "Perform any available operation on any Inventory resource.",
             "system": true,
-            "platform_default": true,
-            "version": 2,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 4,
             "access": [
               {
                 "permission": "inventory:*:*"
+              }
+            ]
+          },
+          {
+            "name": "Inventory Hosts Administrator",
+            "display_name": "Inventory Hosts administrator",
+            "description": "Perform read and update operations on Inventory Hosts data.",
+            "system": true,
+            "platform_default": true,
+            "admin_default": true,
+            "version": 4,
+            "access": [
+              {
+                "permission": "inventory:hosts:write"
+              },
+              {
+                "permission": "inventory:hosts:read"
+              }
+            ]
+          },
+          {
+            "name": "Inventory Hosts Viewer",
+            "display_name": "Inventory Hosts viewer",
+            "description": "Perform read operations on Inventory Hosts data.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 4,
+            "access": [
+              {
+                "permission": "inventory:hosts:read"
+              }
+            ]
+          },
+          {
+            "name": "Inventory Groups Administrator",
+            "display_name": "Workspace administrator",
+            "description": "Perform read and update operations on Workspace data.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": true,
+            "version": 9,
+            "access": [
+              {
+                "permission": "inventory:groups:write"
+              },
+              {
+                "permission": "inventory:groups:read"
+              },
+              {
+                "permission": "rbac:role_binding:view"
+              },
+              {
+                "permission": "rbac:role_binding:grant"
+              },
+              {
+                "permission": "rbac:role_binding:revoke"
+              }
+            ]
+          },
+          {
+            "name": "Inventory Groups Viewer",
+            "display_name": "Workspace viewer",
+            "description": "Perform read operations on Workspace data.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 10,
+            "access": [
+              {
+                "permission": "inventory:groups:read"
+              },
+              {
+                "permission": "rbac:role_binding:view"
               }
             ]
           }
@@ -1108,48 +539,40 @@ objects:
           {
             "name": "Malware detection administrator",
             "display_name": "Malware detection administrator",
-            "description": "Perform any available operation against any malware-detection resource.",
+            "description": "Perform any available operation on any malware-detection resource.",
             "system": true,
             "admin_default": true,
-            "version": 2,
+            "version": 4,
             "access": [
               {
                 "permission": "malware-detection:*:*"
+              }
+            ]
+          },
+          {
+            "name": "Malware detection editor",
+            "display_name": "Malware detection editor",
+            "description": "Read any malware-detection resource as well as set malware acknowledgements.",
+            "system": true,
+            "version": 2,
+            "access": [
+              {
+                "permission": "malware-detection:*:read"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "malware-detection:acknowledgements:write"
               }
             ]
           },
           {
             "name": "Malware detection viewer",
             "display_name": "Malware detection viewer",
-            "description": "Read any malware-detection resource.",
+            "description": "Perform read operations on any malware-detection resource.",
             "system": true,
-            "version": 1,
+            "version": 3,
             "access": [
               {
                 "permission": "malware-detection:*:read"
-              },
-              {
-                "permission": "inventory:*:read"
-              }
-            ]
-          }
-        ]
-      }
-    migration_analytics.json: |
-      {
-        "roles": [
-          {
-            "name": "Migration Analytics administrator",
-            "description": "Perform any available operation against any Migration Analytics resource.",
-            "system": true,
-            "platform_default": true,
-            "version": 2,
-            "access": [
-              {
-                "permission": "migration-analytics:*:*"
               }
             ]
           }
@@ -1160,11 +583,11 @@ objects:
         "roles": [
           {
             "name": "Notifications administrator",
-            "description": "Perform any available operation against Notifications and Integrations applications.",
+            "description": "Perform any available operation against notifications and integrations resources.",
             "system": true,
             "platform_default": false,
             "admin_default": true,
-            "version": 4,
+            "version": 5,
             "access": [
               {
                 "permission": "notifications:*:*"
@@ -1176,10 +599,10 @@ objects:
           },
           {
             "name": "Notifications viewer",
-            "description": "Read only access to notifications and integrations applications.",
+            "description": "Perform read operations on notifications and integrations resources.",
             "system": true,
-            "platform_default": false,
-            "version": 2,
+            "platform_default": true,
+            "version": 5,
             "access": [
               {
                 "permission": "notifications:notifications:read"
@@ -1197,23 +620,47 @@ objects:
         "roles": [
           {
             "name": "OCM Cluster Editor",
-            "display_name": "OCM Cluster Editor",
-            "description": "Grants permission to edit clusters",
+            "display_name": "OCM cluster editor",
+            "description": "Perform update operations on clusters.",
             "system": true,
             "platform_default": false,
-            "version": 2,
+            "version": 3,
             "external": {
               "id": "ClusterEditor",
               "tenant": "ocm"
             }
           },
           {
-            "name": "OCM Cluster Provisioner",
-            "display_name": "OCM Cluster Provisioner",
-            "description": "Grants permission to provision clusters",
+            "name": "OCM Idp Editor",
+            "display_name": "OCM IdP editor",
+            "description": "Perform update operations on IdPs.",
             "system": true,
             "platform_default": false,
             "version": 2,
+            "external": {
+              "id": "IdpEditor",
+              "tenant": "ocm"
+            }
+          },
+          {
+            "name": "OCM Machine Pool Editor",
+            "display_name": "OCM machine pool editor",
+            "description": "Perform update operations on machine pools.",
+            "system": true,
+            "platform_default": false,
+            "version": 2,
+            "external": {
+              "id": "MachinePoolEditor",
+              "tenant": "ocm"
+            }
+          },
+          {
+            "name": "OCM Cluster Provisioner",
+            "display_name": "OCM cluster provisioner",
+            "description": "Perform provision operations on clusters.",
+            "system": true,
+            "platform_default": true,
+            "version": 4,
             "external": {
               "id": "ClusterProvisioner",
               "tenant": "ocm"
@@ -1221,11 +668,11 @@ objects:
           },
           {
             "name": "OCM Cluster Viewer",
-            "display_name": "OCM Cluster Viewer",
-            "description": "Grants permission to view clusters",
+            "display_name": "OCM cluster viewer",
+            "description": "Perform read operations on clusters.",
             "system": true,
-            "platform_default": false,
-            "version": 2,
+            "platform_default": true,
+            "version": 4,
             "external": {
               "id": "ClusterViewer",
               "tenant": "ocm"
@@ -1233,13 +680,25 @@ objects:
           },
           {
             "name": "OCM Organization Admin",
-            "display_name": "OCM Organization Admin",
-            "description": "Grants administrative permissions associated organization's clusters",
+            "display_name": "OCM Organization Administrator",
+            "description": "Perform all available operations on the associated organization's clusters.",
+            "system": true,
+            "platform_default": false,
+            "version": 3,
+            "external": {
+              "id": "OrganizationAdmin",
+              "tenant": "ocm"
+            }
+          },
+          {
+            "name": "OCM Cluster Autoscaler Editor",
+            "display_name": "OCM cluster autoscaler editor",
+            "description": "Perform update operations on the cluster autoscaler.",
             "system": true,
             "platform_default": false,
             "version": 2,
             "external": {
-              "id": "OrganizationAdmin",
+              "id": "ClusterAutoscalerEditor",
               "tenant": "ocm"
             }
           }
@@ -1251,10 +710,10 @@ objects:
           {
             "name": "OCP Advisor administrator",
             "display_name": "OCP Advisor administrator",
-            "description": "Perform any available operation against any OCP Advisor resource.",
+            "description": "Perform any available operation on any OCP Advisor resource.",
             "system": true,
             "platform_default": true,
-            "version": 1,
+            "version": 2,
             "access": [
               {
                 "permission": "ocp-advisor:*:*"
@@ -1268,17 +727,14 @@ objects:
         "roles": [
           {
             "name": "Patch administrator",
-            "description": "Perform any available operation against any Patch resource.",
+            "description": "Perform any available operation on any Patch resource.",
             "system": true,
             "platform_default": false,
             "admin_default": true,
-            "version": 6,
+            "version": 10,
             "access": [
               {
                 "permission": "patch:*:*"
-              },
-              {
-                "permission": "inventory:*:read"
               },
               {
                 "permission": "remediations:*:read"
@@ -1290,17 +746,14 @@ objects:
           },
           {
             "name": "Patch viewer",
-            "description": "Read any Patch resource.",
+            "description": "Perform read operations on any Patch resource.",
             "system": true,
             "platform_default": true,
             "admin_default": false,
-            "version": 1,
+            "version": 5,
             "access": [
               {
                 "permission": "patch:*:read"
-              },
-              {
-                "permission": "inventory:*:read"
               }
             ]
           }
@@ -1311,16 +764,28 @@ objects:
         "roles": [
           {
             "name": "Policies administrator",
-            "description": "Perform any available operation against any Policies resource.",
+            "description": "Perform any available operation on any Policies resource.",
             "system": true,
-            "platform_default": true,
-            "version": 5,
+            "admin_default": true,
+            "version": 9,
             "access": [
               {
-                "permission": "policies:*:*"
+                "permission": "policies:policies:read"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "policies:policies:write"
+              }
+            ]
+          },
+          {
+            "name": "Policies viewer",
+            "description": "Perform read-only operation on any Policies resource.",
+            "system": true,
+            "platform_default": true,
+            "version": 3,
+            "access": [
+              {
+                "permission": "policies:policies:read"
               }
             ]
           }
@@ -1332,10 +797,11 @@ objects:
           {
             "name": "User Access administrator",
             "display_name": "User Access administrator",
-            "description": "Grants a non-org admin full access to configure and manage user access to services hosted on console.redhat.com. This role can only be viewed and assigned by Organization Administrators.",
+            "description": "Perform most delegated access operations for users and service accounts. This includes managing standard groups and assigning/revoking non-admin roles. Cannot invite new users, assign the Org Admin role or manage any group that contains the User Access Administrator role (to prevent privilege escalation).",
             "system": true,
+            "admin_default": true,
             "platform_default": false,
-            "version": 2,
+            "version": 6,
             "access": [
               {
                 "permission": "rbac:*:*"
@@ -1345,10 +811,10 @@ objects:
           {
             "name": "User Access principal viewer",
             "display_name": "User Access principal viewer",
-            "description": "Grants a non-org admin read access to principals within user access.",
+            "description": "Perform read operations as a non-Organization Administrator on principals within user access.",
             "system": true,
             "platform_default": false,
-            "version": 1,
+            "version": 2,
             "access": [
               {
                 "permission": "rbac:principal:read"
@@ -1362,16 +828,16 @@ objects:
         "roles": [
           {
             "name": "Remediations administrator",
-            "description": "Perform any available operation against any Remediations resource",
+            "description": "Perform any available operation on any Remediations resource.",
             "system": true,
             "platform_default": false,
-            "version": 5,
+            "version": 10,
             "access": [
               {
                 "permission": "remediations:*:*"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "playbook-dispatcher:remediations_run:read"
               },
               {
                 "permission": "playbook-dispatcher:run:read",
@@ -1389,16 +855,19 @@ objects:
           },
           {
             "name": "Remediations user",
-            "description": "Perform create, view, update, delete operations against any Remediations resource.",
+            "description": "Perform create, read, update, delete operations on any Remediations resource.",
             "system": true,
             "platform_default": true,
-            "version": 5,
+            "version": 7,
             "access": [
               {
                 "permission": "remediations:remediation:read"
               },
               {
                 "permission": "remediations:remediation:write"
+              },
+              {
+                "permission": "playbook-dispatcher:remediations_run:read"
               },
               {
                 "permission": "playbook-dispatcher:run:read",
@@ -1416,37 +885,396 @@ objects:
           }
         ]
       }
+    rhel.json: |
+      {
+        "roles": [
+          {
+            "name": "RHEL viewer",
+            "display_name": "RHEL viewer",
+            "description": "Grants read-only access to Red Hat Lightspeed for RHEL. Users can view system configs, compliance reports, inventory data, patch info, vulnerabilities and more to observe the state of resources/activities, but can’t perform actions other than generating activation keys.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 8,
+            "access": [
+              {
+                "permission": "advisor:*:read"
+              },
+              {
+                "permission": "compliance:policy:read"
+              },
+              {
+                "permission": "compliance:report:read"
+              },
+              {
+                "permission": "compliance:system:read"
+              },
+              {
+                "permission": "config-manager:activation_keys:read"
+              },
+              {
+                "permission": "config-manager:activation_keys:write"
+              },
+              {
+                "permission": "config-manager:profile:read"
+              },
+              {
+                "permission": "content-sources:repositories:read"
+              },
+              {
+                "permission": "content-sources:templates:read"
+              },
+              {
+                "permission": "idmsvc:domains:list"
+              },
+              {
+                "permission": "idmsvc:domains:read"
+              },
+              {
+                "permission": "integrations:endpoints:read"
+              },
+              {
+                "permission": "inventory:hosts:read"
+              },
+              {
+                "permission": "inventory:groups:read"
+              },
+              {
+                "permission": "malware-detection:*:read"
+              },
+              {
+                "permission": "notifications:notifications:read"
+              },
+              {
+                "permission": "notifications:events:read"
+              },
+              {
+                "permission": "patch:*:read"
+              },
+              {
+                "permission": "playbook-dispatcher:remediations_run:read"
+              },
+              {
+                "permission": "playbook-dispatcher:run:read",
+                "resourceDefinitions": [
+                  {
+                    "attributeFilter": {
+                      "key": "service",
+                      "operation": "equal",
+                      "value": "remediations"
+                    }
+                  }
+                ]
+              },
+              {
+                "permission": "policies:policies:read"
+              },
+              {
+                "permission": "remediations:remediation:read"
+              },
+              {
+                "permission": "ros:*:read"
+              },
+              {
+                "permission": "staleness:staleness:read"
+              },
+              {
+                "permission": "vulnerability:*:read"
+              }
+            ]
+          },
+          {
+            "name": "RHEL operator",
+            "display_name": "RHEL operator",
+            "description": "Grants edit access to system configs, inventory, policies, and notifications/integrations. View compliance reports, patch info, malware detections, and recommendations. Initiate remediations, manage staleness data and modify vulnerability settings.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 10,
+            "access": [
+              {
+                "permission": "advisor:*:*"
+              },
+              {
+                "permission": "compliance:policy:read"
+              },
+              {
+                "permission": "compliance:policy:write"
+              },
+              {
+                "permission": "compliance:report:read"
+              },
+              {
+                "permission": "compliance:system:read"
+              },
+              {
+                "permission": "config-manager:activation_keys:read"
+              },
+              {
+                "permission": "config-manager:activation_keys:write"
+              },
+              {
+                "permission": "config-manager:profile:read"
+              },
+              {
+                "permission": "content-sources:repositories:read"
+              },
+              {
+                "permission": "content-sources:templates:read"
+              },
+              {
+                "permission": "integrations:*:*"
+              },
+              {
+                "permission": "idmsvc:domains:list"
+              },
+              {
+                "permission": "idmsvc:domains:read"
+              },
+              {
+                "permission": "inventory:hosts:read"
+              },
+              {
+                "permission": "inventory:groups:read"
+              },
+              {
+                "permission": "inventory:hosts:write"
+              },
+              {
+                "permission": "inventory:groups:write"
+              },
+              {
+                "permission": "malware-detection:*:read"
+              },
+              {
+                "permission": "malware-detection:acknowledgements:write"
+              },
+              {
+                "permission": "notifications:notifications:read"
+              },
+              {
+                "permission": "notifications:events:read"
+              },
+              {
+                "permission": "notifications:notifications:write"
+              },
+              {
+                "permission": "patch:*:*"
+              },
+              {
+                "permission": "playbook-dispatcher:remediations_run:read"
+              },
+              {
+                "permission": "playbook-dispatcher:run:read",
+                "resourceDefinitions": [
+                  {
+                    "attributeFilter": {
+                      "key": "service",
+                      "operation": "equal",
+                      "value": "remediations"
+                    }
+                  }
+                ]
+              },
+              {
+                "permission": "policies:policies:read"
+              },
+              {
+                "permission": "policies:policies:write"
+              },
+              {
+                "permission": "remediations:*:read"
+              },
+              {
+                "permission": "remediations:*:write"
+              },
+              {
+                "permission": "ros:*:read"
+              },
+              {
+                "permission": "sources:*:*"
+              },
+              {
+                "permission": "staleness:staleness:read"
+              },
+              {
+                "permission": "staleness:staleness:write"
+              },
+              {
+                "permission": "vulnerability:vulnerability_results:read"
+              },
+              {
+                "permission": "vulnerability:system.opt_out:read"
+              },
+              {
+                "permission": "vulnerability:report_and_export:read"
+              },
+              {
+                "permission": "vulnerability:advanced_report:read"
+              },
+              {
+                "permission": "vulnerability:*:read"
+              },
+              {
+                "permission": "vulnerability:cve.business_risk_and_status:write"
+              },
+              {
+                "permission": "vulnerability:system.opt_out:write"
+              }
+            ]
+          },
+          {
+            "name": "RHEL admin",
+            "display_name": "RHEL administrator",
+            "description": "Grants full access to RHEL system configs, inventory, compliance, notifications, patch management, remediations, malware detection, and advisor. View/modify vulnerability settings.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": false,
+            "version": 8,
+            "access": [
+              {
+                "permission": "advisor:*:*"
+              },
+              {
+                "permission": "compliance:*:*"
+              },
+              {
+                "permission": "config-manager:activation_keys:read"
+              },
+              {
+                "permission": "config-manager:activation_keys:write"
+              },
+              {
+                "permission": "config-manager:profile:read"
+              },
+              {
+                "permission": "config-manager:profile:write"
+              },
+              {
+                "permission": "content-sources:repositories:read"
+              },
+              {
+                "permission": "content-sources:templates:read"
+              },
+              {
+                "permission": "content-sources:repositories:write"
+              },
+              {
+                "permission": "content-sources:templates:write"
+              },
+              {
+                "permission": "content-sources:repositories:upload"
+              },
+              {
+                "permission": "idmsvc:token:create"
+              },
+              {
+                "permission": "idmsvc:domains:list"
+              },
+              {
+                "permission": "idmsvc:domains:read"
+              },
+              {
+                "permission": "idmsvc:domains:create"
+              },
+              {
+                "permission": "idmsvc:domains:update"
+              },
+              {
+                "permission": "idmsvc:domains:delete"
+              },
+              {
+                "permission": "integrations:*:*"
+              },
+              {
+                "permission": "inventory:*:*"
+              },
+              {
+                "permission": "malware-detection:*:*"
+              },
+              {
+                "permission": "notifications:notifications:read"
+              },
+              {
+                "permission": "notifications:events:read"
+              },
+              {
+                "permission": "notifications:notifications:write"
+              },
+              {
+                "permission": "patch:*:*"
+              },
+              {
+                "permission": "playbook-dispatcher:remediations_run:read"
+              },
+              {
+                "permission": "playbook-dispatcher:run:read",
+                "resourceDefinitions": [
+                  {
+                    "attributeFilter": {
+                      "key": "service",
+                      "operation": "equal",
+                      "value": "remediations"
+                    }
+                  }
+                ]
+              },
+              {
+                "permission": "policies:policies:read"
+              },
+              {
+                "permission": "policies:policies:write"
+              },
+              {
+                "permission": "remediations:*:*"
+              },
+              {
+                "permission": "ros:*:*"
+              },
+              {
+                "permission": "sources:*:*"
+              },
+              {
+                "permission": "staleness:staleness:read"
+              },
+              {
+                "permission": "staleness:staleness:write"
+              },
+              {
+                "permission": "tasks:*:*"
+              },
+              {
+                "permission": "vulnerability:*:*"
+              }
+            ]
+          }
+        ]
+      }
     ros.json: |
       {
           "roles": [
             {
               "name": "Resource Optimization administrator",
-              "description": "Perform any available operation against any Resource Optimization resource.",
+              "description": "Perform any available operation on any Resource Optimization resource.",
               "system": true,
               "platform_default": false,
               "admin_default": true,
-              "version": 2,
+              "version": 4,
               "access": [
                 {
                   "permission": "ros:*:*"
-                },
-                {
-                  "permission": "inventory:*:read"
                 }
               ]
             },
             {
               "name": "Resource Optimization user",
-              "description": "A Resource Optimization user role that grants read only permission.",
+              "description": "Perform read operations on any Resource Optimization resource.",
               "system": true,
               "platform_default": true,
-              "version": 1,
+              "version": 3,
               "access": [
                 {
                   "permission": "ros:*:read"
-                },
-                {
-                  "permission": "inventory:*:read"
                 }
               ]
             }
@@ -1457,14 +1285,51 @@ objects:
         "roles": [
           {
             "name": "Sources administrator",
-            "description": "Perform any available operation against any Source",
+            "display_name": "Cloud administrator",
+            "description": "Perform any available operation on any source.",
             "system": true,
             "platform_default": false,
             "admin_default": true,
-            "version": 4,
+            "version": 6,
             "access": [
               {
                 "permission": "sources:*:*"
+              }
+            ]
+          }
+        ]
+      }
+    staleness.json: |
+      {
+        "roles": [
+          {
+            "name": "Organization Staleness and Deletion Administrator",
+            "display_name": "Organization staleness and deletion administrator",
+            "description": "Perform read and update operations on organization staleness and deletion data.",
+            "system": true,
+            "platform_default": false,
+            "admin_default": true,
+            "version": 2,
+            "access": [
+              {
+                "permission": "staleness:staleness:write"
+              },
+              {
+                "permission": "staleness:staleness:read"
+              }
+            ]
+          },
+          {
+            "name": "Organization Staleness and Deletion Viewer",
+            "display_name": "Organization staleness and deletion viewer",
+            "description": "Perform read operations on organization staleness and deletion data.",
+            "system": true,
+            "platform_default": true,
+            "admin_default": false,
+            "version": 2,
+            "access": [
+              {
+                "permission": "staleness:staleness:read"
               }
             ]
           }
@@ -1476,26 +1341,24 @@ objects:
           {
             "name": "Subscription Watch administrator",
             "display_name": "Subscriptions administrator",
-            "description": "Perform any available operation against any Subscriptions resource.",
+            "description": "Perform any available operation on any Subscriptions resource.",
             "system": true,
             "admin_default": true,
             "platform_default": false,
-            "version": 6,
+            "version": 8,
             "access": [
               {
                 "permission": "subscriptions:*:*"
-              },
-              {
-                "permission": "inventory:*:read"
               }
             ]
           },
           {
             "name": "Subscriptions user",
-            "description": "View any Subscriptions resource.",
+            "display_name": "Subscriptions viewer",
+            "description": "Perform read operations on any Subscriptions resource.",
             "system": true,
             "platform_default": true,
-            "version": 3,
+            "version": 8,
             "access": [
               {
                 "permission": "subscriptions:reports:read"
@@ -1510,7 +1373,7 @@ objects:
                 "permission": "subscriptions:products:read"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "subscriptions:cloud_access:read"
               }
             ]
           }
@@ -1521,16 +1384,17 @@ objects:
         "roles": [
           {
             "name": "Tasks administrator",
-            "description": "Perform any available operation against any Tasks resource.",
+            "description": "Perform any available operation on any Tasks resource.",
             "system": true,
             "platform_default": false,
-            "version": 1,
+            "admin_default": true,
+            "version": 5,
             "access": [
               {
                 "permission": "tasks:*:*"
               },
               {
-                "permission": "inventory:*:read"
+                "permission": "playbook-dispatcher:tasks_run:read"
               },
               {
                 "permission": "playbook-dispatcher:run:read",
@@ -1553,17 +1417,14 @@ objects:
         "roles": [
           {
             "name": "Vulnerability administrator",
-            "description": "Perform any available operation against any Vulnerability resource.",
+            "description": "Perform any available operation on any Vulnerability resource.",
             "system": true,
             "platform_default": false,
             "admin_default": true,
-            "version": 10,
+            "version": 12,
             "access": [
               {
                 "permission": "vulnerability:*:*"
-              },
-              {
-                "permission": "inventory:*:read"
               },
               {
                 "permission": "remediations:*:read"
@@ -1575,11 +1436,11 @@ objects:
           },
           {
             "name": "Vulnerability viewer",
-            "description": "Read any Vulnerability resource.",
+            "description": "Perform read operations on any Vulnerability resource.",
             "system": true,
             "platform_default": true,
             "admin_default": false,
-            "version": 3,
+            "version": 5,
             "access": [
               {
                 "permission": "vulnerability:vulnerability_results:read"
@@ -1591,9 +1452,6 @@ objects:
                 "permission": "vulnerability:report_and_export:read"
               },
               {
-                "permission": "inventory:*:read"
-              },
-              {
                 "permission": "vulnerability:advanced_report:read"
               }
             ]
@@ -1602,7 +1460,6 @@ objects:
       }
   kind: ConfigMap
   metadata:
-    creationTimestamp: null
     name: rbac-config
     annotations:
       qontract.recycle: "true"

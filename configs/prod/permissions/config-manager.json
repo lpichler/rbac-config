@@ -10,17 +10,15 @@
             "verb": "*"
         }
     ],
-    "state": [
+    "profile": [
         {
             "verb": "read"
         },
         {
             "verb": "write"
-        }
-    ],
-    "state-changes": [
+        },
         {
-            "verb": "read"
+            "verb": "*"
         }
     ]
 }

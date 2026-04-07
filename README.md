@@ -1,3 +1,10 @@
+# When you can expect that your change will appear in stage and production
+
+Stage: Every Tuesday
+Prod: Every Thursday
+
+Note: Reviews will be done same days but for all config PRs.
+
 # Predefined roles and access for Insights Role Based Access Control README
 
 About
@@ -22,7 +29,7 @@ with the json files in the `configs` folders of `rbac-config`.
 
 Contributing
 =============
-The RBAC config for permissions and roles are namespaced per environment in `/configs/(ci|qa|stage|prod)/`.
+The RBAC config for permissions and roles are namespaced per environment in `/configs/(stage|prod)/`.
 Make the appropriate changes you need, per environement, based on when you need them to be promoted.
 
 Canned roles
@@ -30,9 +37,9 @@ Canned roles
 
 Add new roles
 
-Follow existing examples to add roles including name, description, system flag, access with permissions.
+Follow existing examples to add roles including name, description, `system` flag, access with permissions.
 If you want the new role to be associated with platform default group (which defines the default permissions
-for principals in a tenant), you have to add the platform_default flag and set it as true.
+for principals in a tenant), you have to add the `platform_default` flag and set it as true.
 Set the version to 2 for the new role in order to trigger the seeding in the rbac service.
 
 Format of permissions
@@ -106,9 +113,41 @@ exist for the current app/resource type.
 
 Please check existing files for more samples.
 
+Building the Kessel schema
+--------------------------
+
+Prerequisites
+
+1. A recent go version (1.22+) - The Makefile will automatically check if Go is installed
+
+2. Install the required Go tools by running:
+
+    ~~~sh
+    make init
+    ~~~
+
+3. (Optional) Verify the tools are installed:
+
+    ~~~sh
+    make check-go-tools
+    ~~~
+
+**Note**: You don't need to add `$GOBIN` to your PATH. The Makefile automatically uses the correct Go binary path from `go env GOPATH`.
+
+### Building test schemas
+
+To build test schemas:
+
+  ~~~sh
+  make ksl-test-schema-stage  # for stage
+  make ksl-test-schema-prod   # for prod
+  ~~~
+
+The test schemas are written to `_private/test-schema/stage-schema.zed` and `_private/test-schema/prod-schema.zed`
+
 Admin Default Role
 ------------------
-We added support for the new role flag "admin_default", similar to “platform_default”, to allow for admin roles to automatically be assigned to org admins (not admins via the RBAC admin role). By default we will have the "admin_default" flag set to false. An example of what an admin role only assigned to admins by default may look like:
+We added support for the new role flag `admin_default`, similar to `platform_default`, to allow for admin roles to automatically be assigned to org admins (not admins via the RBAC admin role). By default we will have the `admin_default` flag set to false. An example of what an admin role only assigned to admins by default may look like:
 
 ```json
 {
@@ -154,7 +193,7 @@ After the role is seeded into system, the role can be assigned to users through 
 Deployment
 ==========
 Once your PR is merged, an automated PR will be created with your changes applied as
-a ConfigMap in the templates within `/_private/configmaps/(ci|qa|stage|prod)/`
+a ConfigMap in the templates within `/_private/configmaps/(stage|prod)/`
 for roles and permissions.
 
 Once this PR is merged, an MR will need to be created againts the corresponding

@@ -1,0 +1,23 @@
+{
+    "principal": [
+        {
+            "verb": "read"
+        }
+    ],
+    "role_binding": [
+        {
+            "verb": "view"
+        },
+        {
+            "verb": "grant"
+        },
+        {
+            "verb": "revoke"
+        }
+    ],
+    "*": [
+        {
+            "verb": "*"
+        }
+    ]
+}
