@@ -64,13 +64,13 @@ public type workspace { //Workspace is public so services can place resources in
     @add_v1_based_permission(app:'inventory', resource:'groups', verb:'write', v2_perm:'rbac_workspace_move')
     relation move: rbac_workspace_move
 
-    @add_unified_permission(app:'rbac', resource:'role_binding', verb:'view')
+    @add_scoped_permission(app:'rbac', resource:'role_binding', verb:'view')
     relation role_binding_view: rbac_role_binding_view
 
-    @add_unified_permission(app:'rbac', resource:'role_binding', verb:'grant')
+    @add_scoped_permission(app:'rbac', resource:'role_binding', verb:'grant')
     relation role_binding_grant: rbac_role_binding_grant
 
-    @add_unified_permission(app:'rbac', resource:'role_binding', verb:'revoke')
+    @add_scoped_permission(app:'rbac', resource:'role_binding', verb:'revoke')
     relation role_binding_revoke: rbac_role_binding_revoke
 }
 
@@ -120,6 +120,39 @@ public extension add_contingent_permission(first, second, contingent) {
 
     type workspace {
         relation `${contingent}`: `${first}` and `${second}`
+    }
+}
+
+// Adds a scoped (non-inheriting) permission — same as add_unified_permission for role,
+// role_binding, platform, and tenant, but for workspace it generates ONLY
+// binding.X (WITHOUT parent.X). This prevents the permission from cascading
+// down the workspace hierarchy, making it effective only in the workspace
+// where the role binding is directly attached.
+// Use this for control-plane permissions (e.g. role_binding management) that
+// should NOT inherit through parent workspaces.
+public extension add_scoped_permission(app, resource, verb) {
+    type role {
+        allow_duplicates private relation `${app}_all_all`: [bool]
+        allow_duplicates private relation `${app}_${resource}_all`: [bool]
+        allow_duplicates private relation `${app}_all_${verb}`: [bool]
+
+        relation `${app}_${resource}_${verb}`: [bool] or `${app}_${resource}_all` or `${app}_all_${verb}` or `${app}_all_all` or all_all_all or child.`${app}_${resource}_${verb}`
+    }
+
+    type role_binding {
+        relation `${app}_${resource}_${verb}`: subject and role.`${app}_${resource}_${verb}`
+    }
+
+    type platform {
+        relation `${app}_${resource}_${verb}`: binding.`${app}_${resource}_${verb}`
+    }
+
+    type tenant {
+        relation `${app}_${resource}_${verb}`: binding.`${app}_${resource}_${verb}` or platform.`${app}_${resource}_${verb}`
+    }
+
+    type workspace {
+        relation `${app}_${resource}_${verb}`: binding.`${app}_${resource}_${verb}`
     }
 }
 
